@@ -10,6 +10,8 @@
     color: #99A3BA;
     border: 1px solid #CDD9ED;
     background:  #fff;
+    text-transform: uppercase;
+    font: 12px monaco, monospace; 
     transition: border .3s ease;
     &::placeholder {
         color: #CBD1DC;
@@ -19,3 +21,24 @@
         border-color: #466ad6;
     }
 }
+
+.main {
+    height: 100vh;
+    display: grid;
+    align-self: center;
+    width: 100%;
+    place-items: center;
+}
+
+.inputs{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputs input {
+    width: 3%;
+    margin: 1%;
+    height: 30px;
+}
+
