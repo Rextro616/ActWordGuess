@@ -1,0 +1,21 @@
+.entrada-texto {
+    /* width: 7px; */
+    display: block;
+    padding: 8px 16px;
+    line-height: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 6px;
+    color: #99A3BA;
+    border: 1px solid #CDD9ED;
+    background:  #fff;
+    transition: border .3s ease;
+    &::placeholder {
+        color: #CBD1DC;
+    }
+    &:focus {
+        outline: none;
+        border-color: #466ad6;
+    }
+}
