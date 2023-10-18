@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 class Word {
   constructor(word) {
@@ -28,18 +28,35 @@ function App() {
   const [disabled, setDisabled] = useState(true);
   const [aciertos, setAciertos] = useState(0);
   const [errores, setErrores] = useState(0);
-  // const [value, setValue] = useState("");
   const [resultado, setResultado] = useState("");
+  const [value, setValue] = useState("Iniciar");
 
-  // let inputs = document.getElementsByClassName("entrada-texto");
+  let inputs = document.getElementsByClassName("entrada-texto");
 
   const [word, setWord] = useState();
   const [wordGame, setWordGame] = useState();
   const [wordScrambled, setWordScrambled] = useState("");
   const [wordOrder, setWordOrder] = useState("");
+  const uno = useRef();
+  const dos = useRef();
+  const tres = useRef();
+  const cuatro = useRef();
+  const cinco = useRef();
+
   const wordChange = (Event) => {
     setWord(word + Event.target.value.toLowerCase());
     let index = Event.target.id;
+
+    if (index == 1){
+      dos.current?.focus();
+    } else if (index == 2){
+      tres.current?.focus();
+    } else if (index == 3){
+      cuatro.current?.focus();
+    } else if (index == 4){
+      cinco.current?.focus();
+    } 
+
 
     if (wordGame[index - 1] !== Event.target.value.toLowerCase()) {
       if (Event.target.value !== "") {
@@ -49,7 +66,9 @@ function App() {
         if (errores === 3) {
           setDisabled(true);
           setResultado("Perdiste");
+          setValue("Reiniciar");
         }
+
       } else {
         let wordAux = word.split("");
         let wordAgain = "";
@@ -59,13 +78,16 @@ function App() {
       }
     }
 
-    if (word === wordOrder) {
+    if ((word + Event.target.value.toLowerCase()) === wordOrder[0]) {
       setAciertos(aciertos + 1);
+      getWord();
+      if (aciertos === 9) {
+        setDisabled(true);
+        setResultado("Ganaste");
+        setValue("Reiniciar");
+      }
     }
 
-    if (aciertos === 10) {
-      setResultado("Ganaste");
-    }
   };
 
   const getWord = async () => {
@@ -85,7 +107,9 @@ function App() {
 
     setWord("");
     clear();
-    console.log(order);
+
+    uno.current?.focus();
+
     console.log(wg.word);
   };
 
@@ -98,8 +122,8 @@ function App() {
   }
 
   const clear = () => {
-    // console.log(inputs)
-    // inputs.map((input) => console.log(input));
+    let array = Array.prototype.slice.call(inputs)
+    array.map((input) => input.value = "");
   }
 
   return (
@@ -107,7 +131,6 @@ function App() {
       <div className="palabras">
         <h1>{wordScrambled}</h1>
         <h1>{word}</h1>
-        <h1>{wordOrder}</h1>
         <h1>{resultado}</h1>
       </div>
 
@@ -121,15 +144,15 @@ function App() {
       </div>
 
       <div className="inputs">
-        <input disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="1" />
-        <input disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="2" />
-        <input disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="3" />
-        <input disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="4" />
-        <input disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="5" />
+        <input ref={uno} disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="1" />
+        <input ref={dos} disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="2" />
+        <input ref={tres} disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="3" />
+        <input ref={cuatro} disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="4" />
+        <input ref={cinco} disabled={disabled} maxLength={1} onChange={wordChange} className="entrada-texto" type="text" id="5" />
       </div>
 
       <div className="buttons">
-        <button onClick={start}>Restart</button>
+        <button onClick={start}>{value}</button>
       </div>
 
     </main>
