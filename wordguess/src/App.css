@@ -10,7 +10,6 @@
     color: #99A3BA;
     border: 1px solid #CDD9ED;
     background:  #fff;
-    text-transform: uppercase;
     font: 12px monaco, monospace; 
     transition: border .3s ease;
     &::placeholder {
